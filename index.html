@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ark Squared Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ark-purple: #5230e8;
+    --ark-deep: #1a0a5e;
+    --ark-pale: #f5f3ff;
+    --ark-white: #ffffff;
+    --ark-gold: #c9a84c;
+    --ark-text: #1c1c2e;
+    --ark-muted: #6b6b8a;
+    --ark-border: #e0daf5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: #fafaf8;
+    color: var(--ark-text);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ark-white);
+    border-bottom: 1px solid var(--ark-border);
+    padding: 0 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ark-text);
+    line-height: 1;
+  }
+
+  .logo-name sup {
+    font-size: 13px;
+    font-weight: 300;
+    vertical-align: super;
+    letter-spacing: 0;
+  }
+
+  .logo-sub {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9.5px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--ark-muted);
+    text-transform: uppercase;
+  }
+
+  nav { display: flex; gap: 36px; align-items: center; }
+
+  nav a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ark-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--ark-purple); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ark-deep);
+    color: var(--ark-white);
+    padding: 110px 60px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(82,48,232,0.45) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 5.5vw, 72px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .hero p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.7);
+    max-width: 580px;
+    margin-bottom: 48px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 14px 30px;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ark-white);
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .hero-cta:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  /* ── DIVIDER ── */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ark-gold) 30%, var(--ark-gold) 70%, transparent);
+    margin: 0 60px;
+    opacity: 0.4;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 80px 60px; }
+
+  .section-label {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ark-purple);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ark-text);
+    margin-bottom: 24px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--ark-white);
+    border-bottom: 1px solid var(--ark-border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+  }
+
+  .about-body p {
+    font-size: 15px;
+    color: #3a3a55;
+    margin-bottom: 18px;
+    line-height: 1.85;
+  }
+
+  .about-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding-top: 8px;
+  }
+
+  .stat {
+    border-left: 2px solid var(--ark-purple);
+    padding-left: 24px;
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--ark-text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ark-muted);
+  }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy {
+    background: var(--ark-pale);
+    border-bottom: 1px solid var(--ark-border);
+  }
+
+  .philosophy-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 52px;
+    max-width: 1100px;
+  }
+
+  .pillar {
+    padding: 36px 32px;
+    background: var(--ark-white);
+    border-top: 3px solid var(--ark-purple);
+  }
+
+  .pillar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--ark-border);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .pillar h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ark-text);
+    margin-bottom: 14px;
+  }
+
+  .pillar p {
+    font-size: 14px;
+    color: var(--ark-muted);
+    line-height: 1.8;
+  }
+
+  /* ── HOLDINGS ── */
+  .holdings { background: var(--ark-white); border-bottom: 1px solid var(--ark-border); }
+
+  .holdings-intro {
+    font-size: 15px;
+    color: #3a3a55;
+    max-width: 640px;
+    margin-bottom: 52px;
+    line-height: 1.85;
+  }
+
+  table {
+    width: 100%;
+    max-width: 1100px;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead th {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ark-muted);
+    padding: 0 20px 16px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--ark-border);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--ark-border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: var(--ark-pale); }
+
+  tbody td {
+    padding: 18px 20px 18px 0;
+    color: var(--ark-text);
+    font-weight: 400;
+  }
+
+  td.sector {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ark-muted);
+    text-transform: uppercase;
+  }
+
+  td.positive { color: #2e7d52; font-weight: 500; }
+  td.negative { color: #c0392b; font-weight: 500; }
+
+  /* ── FILINGS ── */
+  .filings { background: var(--ark-pale); border-bottom: 1px solid var(--ark-border); }
+
+  .filings-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin-top: 52px;
+  }
+
+  .filing-card {
+    background: var(--ark-white);
+    border: 1px solid var(--ark-border);
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .filing-card:hover {
+    border-color: var(--ark-purple);
+    box-shadow: 0 4px 20px rgba(82,48,232,0.08);
+  }
+
+  .filing-type {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    margin-bottom: 10px;
+  }
+
+  .filing-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ark-text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .filing-date {
+    font-size: 11px;
+    color: var(--ark-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── LEADERSHIP ── */
+  .leadership { background: var(--ark-white); border-bottom: 1px solid var(--ark-border); }
+
+  .leaders {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 900px;
+    margin-top: 52px;
+  }
+
+  .leader {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .leader-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--ark-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--ark-white);
+    margin-bottom: 20px;
+  }
+
+  .leader-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ark-text);
+    margin-bottom: 6px;
+  }
+
+  .leader-title {
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ark-purple);
+    margin-bottom: 14px;
+  }
+
+  .leader-bio {
+    font-size: 13.5px;
+    color: var(--ark-muted);
+    line-height: 1.8;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--ark-deep);
+    color: var(--ark-white);
+    padding: 80px 60px;
+  }
+
+  .contact-inner {
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact .section-title { color: var(--ark-white); }
+  .contact .section-label { color: var(--ark-gold); }
+
+  .contact p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.85;
+    margin-bottom: 32px;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 28px; }
+
+  .contact-item {}
+
+  .contact-item-label {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    margin-bottom: 6px;
+  }
+
+  .contact-item-val {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ark-text);
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links { display: flex; gap: 28px; }
+
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    header { padding: 0 28px; }
+    nav { display: none; }
+    .hero, section, .contact, footer { padding-left: 28px; padding-right: 28px; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .philosophy-cols { grid-template-columns: 1fr; }
+    .filings-grid { grid-template-columns: repeat(2, 1fr); }
+    .leaders { grid-template-columns: 1fr 1fr; }
+    .gold-rule { margin: 0 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo-wrap">
+    <div class="logo-name">Ark<sup>2</sup> Capital</div>
+  </a>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#holdings">Holdings</a>
+    <a href="#filings">Filings</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Family Office · Long-Term Capital Allocation</p>
+    <h1>Capital Deployed<br>with <em>Conviction</em><br>and Patience</h1>
+    <p>Ark Squared Capital is a private investment firm committed to acquiring and holding exceptional businesses at fair prices. We take a long-horizon approach, partnering with management teams who share our belief that enduring value is built — not traded.</p>
+    <a href="#about" class="hero-cta">
+      Learn More
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-body">
+      <p class="section-label">About the Firm</p>
+      <h2 class="section-title">A Different Kind<br>of Capital Partner</h2>
+      <p>Founded on the principle that the best investment is ownership in a business you understand deeply, Ark Squared Capital focuses on concentrated, long-duration positions in companies with durable competitive advantages.</p>
+      <p>We are not driven by quarterly benchmarks or fund cycles. Our capital is permanent. Our perspective is generational. Our commitment to our partners is unconditional.</p>
+      <p>We look for businesses with strong free cash flow generation, honest and capable management, and pricing power that compounds quietly over decades.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-value">A²</div>
+        <div class="stat-label">Compounding Returns Since Inception</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Investment Horizon</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">1</div>
+        <div class="stat-label">Governing Principle — Own Great Businesses</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <p class="section-label">Investment Philosophy</p>
+  <h2 class="section-title">Three Pillars of<br>Permanent Capital</h2>
+  <div class="philosophy-cols">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <h3>Quality Over Quantity</h3>
+      <p>We hold concentrated positions in a small number of exceptional businesses rather than diversifying across mediocrity. Understanding each holding completely is a prerequisite, not an aspiration.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <h3>Patience as Strategy</h3>
+      <p>Time is the ally of a wonderful business and the enemy of a poor one. We are willing to sit still when markets are irrational, and act decisively when they present opportunity.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <h3>Integrity as Infrastructure</h3>
+      <p>Every relationship — with portfolio companies, limited partners, and counterparties — is governed by the same standard: honesty, transparency, and long-term alignment of interest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOLDINGS -->
+<section class="holdings" id="holdings">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title">Holdings</h2>
+  <p class="holdings-intro">Ark² Capital is currently in formation. Holdings will be disclosed here as positions are established.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Sector</th>
+        <th>Est. Position</th>
+        <th>YTD Return</th>
+        <th>Holding Period</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="5" style="padding: 40px 0; color: var(--ark-muted); font-size: 13px; letter-spacing: 0.05em;">No current holdings to display.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FILINGS -->
+<section class="filings" id="filings">
+  <p class="section-label">Investor Relations</p>
+  <h2 class="section-title">Reports &amp; Filings</h2>
+  <p style="font-size: 14px; color: var(--ark-muted); margin-top: 52px;">No reports or filings to display at this time.</p>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership" id="leadership">
+  <p class="section-label">Leadership</p>
+  <h2 class="section-title">The Team</h2>
+  <div class="leaders">
+    <div class="leader">
+      <div class="leader-avatar">T</div>
+      <div class="leader-name">T. Kelley</div>
+      <div class="leader-title">Founder &amp; Managing Partner</div>
+    </div>
+    <div class="leader">
+      <div class="leader-avatar">M</div>
+      <div class="leader-name">M. Kelley</div>
+      <div class="leader-title">Founder &amp; President</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <p class="section-label">Contact</p>
+      <h2 class="section-title">Get in Touch</h2>
+      <p>Ark² Capital is a private family office. Inquiries may be directed to the address below.</p>
+    </div>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-item-label">Investor Relations</div>
+        <div class="contact-item-val">trey@ark2cap.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Ark Squared Capital LLC. All rights reserved. · Not an offer to sell securities.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Disclosures</a>
+    <a href="#">ADV Part 2</a>
+    <a href="#">SEC Filings</a>
+  </div>
+</footer>
+
+</body>
+</html>
