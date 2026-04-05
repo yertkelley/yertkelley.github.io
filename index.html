@@ -3,673 +3,610 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ark Squared Capital</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Ark² Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ark-purple: #5230e8;
-    --ark-deep: #1a0a5e;
-    --ark-pale: #f5f3ff;
-    --ark-white: #ffffff;
-    --ark-gold: #c9a84c;
-    --ark-text: #1c1c2e;
-    --ark-muted: #6b6b8a;
-    --ark-border: #e0daf5;
-  }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8A06A;
+    --gold-light: #D4BC8A;
+    --gold-dark: #8C7548;
+    --ink: #111008;
+    --parchment: #FAF8F3;
+    --warm-gray: #6B6560;
+    --line: rgba(184,160,106,0.25);
+  }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Raleway', sans-serif;
-    background: #fafaf8;
-    color: var(--ark-text);
+    font-family: 'Jost', sans-serif;
     font-weight: 300;
-    line-height: 1.7;
+    background: var(--parchment);
+    color: var(--ink);
+    overflow-x: hidden;
   }
 
-  /* ── HEADER ── */
-  header {
-    background: var(--ark-white);
-    border-bottom: 1px solid var(--ark-border);
-    padding: 0 60px;
-    position: sticky;
-    top: 0;
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    padding: 2rem 5vw;
+    background: transparent;
+    transition: background 0.4s;
   }
+  nav.scrolled { background: rgba(250,248,243,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 
-  .logo-wrap {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
     text-decoration: none;
   }
-
-  .logo-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--ark-text);
-    line-height: 1;
-  }
-
-  .logo-name sup {
-    font-size: 13px;
-    font-weight: 300;
+  .logo sup {
+    font-size: 0.65em;
     vertical-align: super;
-    letter-spacing: 0;
+    color: var(--gold);
   }
 
-  .logo-sub {
-    font-family: 'Raleway', sans-serif;
-    font-size: 9.5px;
-    font-weight: 400;
-    letter-spacing: 0.3em;
-    color: var(--ark-muted);
-    text-transform: uppercase;
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
   }
-
-  nav { display: flex; gap: 36px; align-items: center; }
-
-  nav a {
-    font-size: 11px;
-    font-weight: 500;
+  nav ul a {
+    text-decoration: none;
+    font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--ark-muted);
-    text-decoration: none;
-    transition: color 0.2s;
+    color: var(--warm-gray);
+    transition: color 0.3s;
   }
-
-  nav a:hover { color: var(--ark-purple); }
+  nav ul a:hover { color: var(--gold); }
 
   /* ── HERO ── */
   .hero {
-    background: var(--ark-deep);
-    color: var(--ark-white);
-    padding: 110px 60px 100px;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 5vw 6rem;
     position: relative;
     overflow: hidden;
   }
 
-  .hero::before {
-    content: '';
+  .hero-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(82,48,232,0.45) 0%, transparent 70%);
-    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(184,160,106,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184,160,106,0.05) 0%, transparent 60%);
   }
 
-  .hero-inner {
-    max-width: 860px;
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    opacity: 0.4;
+  }
+
+  .hero-content {
     position: relative;
     z-index: 1;
+    text-align: center;
+    max-width: 860px;
+    animation: fadeUp 1.2s ease both;
   }
 
   .hero-eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.35em;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--ark-gold);
-    margin-bottom: 28px;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-light);
   }
 
-  .hero h1 {
+  h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(38px, 5.5vw, 72px);
     font-weight: 300;
-    line-height: 1.08;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
     letter-spacing: -0.01em;
-    margin-bottom: 32px;
+    color: var(--ink);
+    margin-bottom: 2rem;
   }
-
-  .hero h1 em {
+  h1 em {
     font-style: italic;
-    color: rgba(255,255,255,0.65);
+    color: var(--gold-dark);
   }
 
-  .hero p {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: rgba(255,255,255,0.7);
-    max-width: 580px;
-    margin-bottom: 48px;
+  .hero-sub {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
+    line-height: 2;
+    max-width: 480px;
+    margin: 0 auto 3.5rem;
   }
 
   .hero-cta {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 14px 30px;
-    font-size: 10.5px;
-    font-weight: 500;
+    gap: 1rem;
+    text-decoration: none;
+    font-size: 0.7rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--ark-white);
-    text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
+    color: var(--ink);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.4rem;
+    transition: color 0.3s, border-color 0.3s;
   }
-
-  .hero-cta:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.6);
-  }
+  .hero-cta:hover { color: var(--gold); }
+  .hero-cta svg { transition: transform 0.3s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
 
   /* ── DIVIDER ── */
-  .gold-rule {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ark-gold) 30%, var(--ark-gold) 70%, transparent);
-    margin: 0 60px;
-    opacity: 0.4;
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 5vw;
+    margin: 1rem 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--line); }
+  .divider-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
   }
 
-  /* ── SECTION SHARED ── */
-  section { padding: 80px 60px; }
+  /* ── SECTION BASE ── */
+  section { padding: 8rem 5vw; }
 
   .section-label {
-    font-size: 9.5px;
-    font-weight: 500;
-    letter-spacing: 0.35em;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--ark-purple);
-    margin-bottom: 16px;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
   }
 
-  .section-title {
+  h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(28px, 3.5vw, 46px);
     font-weight: 300;
-    line-height: 1.15;
-    color: var(--ark-text);
-    margin-bottom: 24px;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
   }
-
-  /* ── ABOUT ── */
-  .about {
-    background: var(--ark-white);
-    border-bottom: 1px solid var(--ark-border);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    max-width: 1100px;
-  }
-
-  .about-body p {
-    font-size: 15px;
-    color: #3a3a55;
-    margin-bottom: 18px;
-    line-height: 1.85;
-  }
-
-  .about-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-    padding-top: 8px;
-  }
-
-  .stat {
-    border-left: 2px solid var(--ark-purple);
-    padding-left: 24px;
-  }
-
-  .stat-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
-    font-weight: 300;
-    color: var(--ark-text);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .stat-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ark-muted);
-  }
+  h2 em { font-style: italic; color: var(--gold-dark); }
 
   /* ── PHILOSOPHY ── */
-  .philosophy {
-    background: var(--ark-pale);
-    border-bottom: 1px solid var(--ark-border);
+  .philosophy { background: var(--ink); color: var(--parchment); }
+  .philosophy .section-label { color: var(--gold-light); }
+  .philosophy h2 { color: var(--parchment); }
+  .philosophy h2 em { color: var(--gold-light); }
+
+  .philosophy-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
   }
 
-  .philosophy-cols {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 48px;
-    margin-top: 52px;
-    max-width: 1100px;
+  .philosophy-text p {
+    font-size: 0.95rem;
+    line-height: 2;
+    color: rgba(250,248,243,0.7);
+    margin-top: 1.5rem;
+  }
+
+  .philosophy-pillars {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .pillar {
-    padding: 36px 32px;
-    background: var(--ark-white);
-    border-top: 3px solid var(--ark-purple);
+    padding: 2rem 0;
+    border-top: 1px solid rgba(184,160,106,0.2);
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    animation: fadeUp 0.8s ease both;
   }
 
   .pillar-num {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    color: var(--ark-border);
-    line-height: 1;
-    margin-bottom: 20px;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    padding-top: 0.2rem;
   }
 
   .pillar h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ark-text);
-    margin-bottom: 14px;
-  }
-
-  .pillar p {
-    font-size: 14px;
-    color: var(--ark-muted);
-    line-height: 1.8;
-  }
-
-  /* ── HOLDINGS ── */
-  .holdings { background: var(--ark-white); border-bottom: 1px solid var(--ark-border); }
-
-  .holdings-intro {
-    font-size: 15px;
-    color: #3a3a55;
-    max-width: 640px;
-    margin-bottom: 52px;
-    line-height: 1.85;
-  }
-
-  table {
-    width: 100%;
-    max-width: 1100px;
-    border-collapse: collapse;
-    font-size: 13.5px;
-  }
-
-  thead th {
-    font-size: 9.5px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ark-muted);
-    padding: 0 20px 16px 0;
-    text-align: left;
-    border-bottom: 1px solid var(--ark-border);
-  }
-
-  tbody tr {
-    border-bottom: 1px solid var(--ark-border);
-    transition: background 0.15s;
-  }
-
-  tbody tr:hover { background: var(--ark-pale); }
-
-  tbody td {
-    padding: 18px 20px 18px 0;
-    color: var(--ark-text);
-    font-weight: 400;
-  }
-
-  td.sector {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--ark-muted);
-    text-transform: uppercase;
-  }
-
-  td.positive { color: #2e7d52; font-weight: 500; }
-  td.negative { color: #c0392b; font-weight: 500; }
-
-  /* ── FILINGS ── */
-  .filings { background: var(--ark-pale); border-bottom: 1px solid var(--ark-border); }
-
-  .filings-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1100px;
-    margin-top: 52px;
-  }
-
-  .filing-card {
-    background: var(--ark-white);
-    border: 1px solid var(--ark-border);
-    padding: 28px 24px;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .filing-card:hover {
-    border-color: var(--ark-purple);
-    box-shadow: 0 4px 20px rgba(82,48,232,0.08);
-  }
-
-  .filing-type {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--ark-gold);
-    margin-bottom: 10px;
-  }
-
-  .filing-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
     font-weight: 400;
-    color: var(--ark-text);
-    margin-bottom: 10px;
-    line-height: 1.3;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .pillar p {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: rgba(250,248,243,0.5);
+    letter-spacing: 0.02em;
   }
 
-  .filing-date {
-    font-size: 11px;
-    color: var(--ark-muted);
-    letter-spacing: 0.05em;
+  /* ── APPROACH ── */
+  .approach-inner {
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  /* ── LEADERSHIP ── */
-  .leadership { background: var(--ark-white); border-bottom: 1px solid var(--ark-border); }
+  .approach-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 5rem;
+  }
 
-  .leaders {
+  .approach-header p {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: var(--warm-gray);
+  }
+
+  .approach-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    max-width: 900px;
-    margin-top: 52px;
+    gap: 1.5px;
+    background: var(--line);
+    border: 1px solid var(--line);
   }
 
-  .leader {
-    display: flex;
-    flex-direction: column;
+  .approach-card {
+    background: var(--parchment);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+  }
+  .approach-card:hover { background: #F0EDDF; }
+
+  .approach-card-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 1.5rem;
   }
 
-  .leader-avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: var(--ark-purple);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .approach-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 300;
-    color: var(--ark-white);
-    margin-bottom: 20px;
-  }
-
-  .leader-name {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    color: var(--ark-text);
-    margin-bottom: 6px;
-  }
-
-  .leader-title {
-    font-size: 10.5px;
     font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ark-purple);
-    margin-bottom: 14px;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.02em;
   }
 
-  .leader-bio {
-    font-size: 13.5px;
-    color: var(--ark-muted);
-    line-height: 1.8;
+  .approach-card p {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--warm-gray);
+  }
+
+  /* ── STATS ── */
+  .stats { background: #F0EDE3; padding: 5rem 5vw; }
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    padding: 2rem;
+    border-right: 1px solid var(--line);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 3rem;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-num span { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
   }
 
   /* ── CONTACT ── */
-  .contact {
-    background: var(--ark-deep);
-    color: var(--ark-white);
-    padding: 80px 60px;
-  }
-
   .contact-inner {
-    max-width: 900px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-inner p {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: var(--warm-gray);
+    margin-bottom: 3rem;
   }
 
-  .contact .section-title { color: var(--ark-white); }
-  .contact .section-label { color: var(--ark-gold); }
-
-  .contact p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.85;
-    margin-bottom: 32px;
+  .contact-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
   }
 
-  .contact-items { display: flex; flex-direction: column; gap: 28px; }
-
-  .contact-item {}
-
-  .contact-item-label {
-    font-size: 9.5px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
+  .contact-item {
+    text-align: center;
+  }
+  .contact-item .contact-item-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--ark-gold);
-    margin-bottom: 6px;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
   }
+  .contact-item a, .contact-item span {
+    font-size: 0.82rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.3s;
+  }
+  .contact-item a:hover { color: var(--gold); }
 
-  .contact-item-val {
-    font-size: 14px;
-    color: rgba(255,255,255,0.8);
+  .btn-outline {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--gold);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.3s, color 0.3s;
   }
+  .btn-outline:hover { background: var(--gold); color: var(--parchment); }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--ark-text);
-    padding: 28px 60px;
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  .footer-copy {
-    font-size: 11px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 0.05em;
+  footer .logo { font-size: 1.1rem; }
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
   }
 
-  .footer-links { display: flex; gap: 28px; }
-
-  .footer-links a {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    text-decoration: none;
-    transition: color 0.2s;
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    header { padding: 0 28px; }
-    nav { display: none; }
-    .hero, section, .contact, footer { padding-left: 28px; padding-right: 28px; }
-    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-    .philosophy-cols { grid-template-columns: 1fr; }
-    .filings-grid { grid-template-columns: repeat(2, 1fr); }
-    .leaders { grid-template-columns: 1fr 1fr; }
-    .gold-rule { margin: 0 28px; }
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .philosophy-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .approach-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .approach-cards { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); }
+    .stat:nth-child(odd) { border-right: 1px solid var(--line); }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <a href="#" class="logo-wrap">
-    <div class="logo-name">Ark<sup>2</sup> Capital</div>
-  </a>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#philosophy">Philosophy</a>
-    <a href="#holdings">Holdings</a>
-    <a href="#filings">Filings</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Ark<sup>2</sup> Capital</a>
+  <ul>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
-    <p class="hero-eyebrow">Family Office · Long-Term Capital Allocation</p>
-    <h1>Capital Deployed<br>with <em>Conviction</em><br>and Patience</h1>
-    <p>Ark Squared Capital is a private investment firm committed to acquiring and holding exceptional businesses at fair prices. We take a long-horizon approach, partnering with management teams who share our belief that enduring value is built — not traded.</p>
-    <a href="#about" class="hero-cta">
-      Learn More
-      <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Family Investment Office</div>
+    <h1>Stewardship<br>across <em>generations</em></h1>
+    <p class="hero-sub">Preserving and growing family wealth with patience, precision, and long-term conviction.</p>
+    <a href="#philosophy" class="hero-cta">
+      Our philosophy
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+        <path d="M1 5h14M10 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </a>
   </div>
 </section>
 
-<div class="gold-rule"></div>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-grid">
-    <div class="about-body">
-      <p class="section-label">About the Firm</p>
-      <h2 class="section-title">A Different Kind<br>of Capital Partner</h2>
-      <p>Founded on the principle that the best investment is ownership in a business you understand deeply, Ark Squared Capital focuses on concentrated, long-duration positions in companies with durable competitive advantages.</p>
-      <p>We are not driven by quarterly benchmarks or fund cycles. Our capital is permanent. Our perspective is generational. Our commitment to our partners is unconditional.</p>
-      <p>We look for businesses with strong free cash flow generation, honest and capable management, and pricing power that compounds quietly over decades.</p>
+<!-- STATS BAR -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Generations of Trust</div>
     </div>
-    <div class="about-stats">
-      <div class="stat">
-        <div class="stat-value">A²</div>
-        <div class="stat-label">Compounding Returns Since Inception</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">∞</div>
-        <div class="stat-label">Investment Horizon</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">1</div>
-        <div class="stat-label">Governing Principle — Own Great Businesses</div>
-      </div>
+    <div class="stat reveal">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Year in Operation</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Asset Classes</div>
     </div>
   </div>
-</section>
+</div>
+
 
 <!-- PHILOSOPHY -->
 <section class="philosophy" id="philosophy">
-  <p class="section-label">Investment Philosophy</p>
-  <h2 class="section-title">Three Pillars of<br>Permanent Capital</h2>
-  <div class="philosophy-cols">
-    <div class="pillar">
-      <div class="pillar-num">01</div>
-      <h3>Quality Over Quantity</h3>
-      <p>We hold concentrated positions in a small number of exceptional businesses rather than diversifying across mediocrity. Understanding each holding completely is a prerequisite, not an aspiration.</p>
+  <div class="philosophy-inner">
+    <div class="philosophy-text reveal">
+      <div class="section-label">Our Philosophy</div>
+      <h2>Built to <em>endure</em>,<br>not to impress</h2>
+      <p>At Ark² Capital, we operate with the quiet conviction that true wealth is measured in decades, not quarters. We are stewards first — allocating capital where it can compound with care, discipline, and a deep respect for what has been built before us.</p>
+      <p>We do not chase trends. We do not follow consensus. We anchor every decision in fundamentals, relationships, and a generational perspective that no institutional calendar can replicate.</p>
     </div>
-    <div class="pillar">
-      <div class="pillar-num">02</div>
-      <h3>Patience as Strategy</h3>
-      <p>Time is the ally of a wonderful business and the enemy of a poor one. We are willing to sit still when markets are irrational, and act decisively when they present opportunity.</p>
+    <div class="philosophy-pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num">01</div>
+        <div>
+          <h3>Permanence of Capital</h3>
+          <p>We invest with an indefinite horizon. Our capital is patient, allowing businesses to breathe and compound without the pressure of short-term expectations.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">02</div>
+        <div>
+          <h3>Trust as Infrastructure</h3>
+          <p>Every partnership we enter is built on integrity and transparency. Relationships are the true asset — returns are the result.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">03</div>
+        <div>
+          <h3>Disciplined Concentration</h3>
+          <p>We hold fewer, better positions. Conviction-led investing demands selectivity; we would rather own a little of something extraordinary than a lot of something ordinary.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">04</div>
+        <div>
+          <h3>Legacy by Design</h3>
+          <p>Every allocation decision is made with the next generation in mind. Wealth that cannot transfer is wealth that was never truly built.</p>
+        </div>
+      </div>
     </div>
-    <div class="pillar">
-      <div class="pillar-num">03</div>
-      <h3>Integrity as Infrastructure</h3>
-      <p>Every relationship — with portfolio companies, limited partners, and counterparties — is governed by the same standard: honesty, transparency, and long-term alignment of interest.</p>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="approach-inner">
+    <div class="approach-header reveal">
+      <div>
+        <div class="section-label">Our Approach</div>
+        <h2>Where we<br><em>allocate</em></h2>
+      </div>
+      <div>
+        <p>We deploy across a curated set of asset classes, chosen for their ability to generate durable, risk-adjusted returns that compound meaningfully across long holding periods.</p>
+      </div>
+    </div>
+
+    <div class="approach-cards" style="grid-template-columns: 1fr 1fr;">
+      <div class="approach-card reveal" style="padding: 3rem 2.5rem;">
+        <svg class="approach-card-icon" viewBox="0 0 32 32" fill="none">
+          <rect x="3" y="10" width="12" height="16" stroke="#B8A06A" stroke-width="1.2"/>
+          <rect x="17" y="6" width="12" height="20" stroke="#B8A06A" stroke-width="1.2"/>
+          <path d="M6 10V7a2 2 0 012-2h4a2 2 0 012 2v3" stroke="#8C7548" stroke-width="1"/>
+          <path d="M8 14h2M8 17h2M8 20h2M20 10h2M20 13h2M20 16h2" stroke="#B8A06A" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <h3>Real Assets</h3>
+        <p>Direct investment in commercial and residential real estate, agriculture, and infrastructure — tangible assets that preserve purchasing power across cycles.</p>
+      </div>
+      <div class="approach-card reveal" style="padding: 3rem 2.5rem;">
+        <svg class="approach-card-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="11" stroke="#B8A06A" stroke-width="1.2"/>
+          <path d="M16 5v22M5 16h22" stroke="#B8A06A" stroke-width="1.2" stroke-linecap="round"/>
+          <ellipse cx="16" cy="16" rx="5" ry="11" stroke="#8C7548" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+        <h3>Public Markets</h3>
+        <p>A concentrated portfolio of publicly traded equities held for multi-year periods, selected with the same rigor and patience applied to our private investments.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- HOLDINGS -->
-<section class="holdings" id="holdings">
-  <p class="section-label">Portfolio</p>
-  <h2 class="section-title">Holdings</h2>
-  <p class="holdings-intro">Ark² Capital is currently in formation. Holdings will be disclosed here as positions are established.</p>
-  <table>
-    <thead>
-      <tr>
-        <th>Company</th>
-        <th>Sector</th>
-        <th>Est. Position</th>
-        <th>YTD Return</th>
-        <th>Holding Period</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td colspan="5" style="padding: 40px 0; color: var(--ark-muted); font-size: 13px; letter-spacing: 0.05em;">No current holdings to display.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- FILINGS -->
-<section class="filings" id="filings">
-  <p class="section-label">Investor Relations</p>
-  <h2 class="section-title">Reports &amp; Filings</h2>
-  <p style="font-size: 14px; color: var(--ark-muted); margin-top: 52px;">No reports or filings to display at this time.</p>
-</section>
-
-<!-- LEADERSHIP -->
-<section class="leadership" id="leadership">
-  <p class="section-label">Leadership</p>
-  <h2 class="section-title">The Team</h2>
-  <div class="leaders">
-    <div class="leader">
-      <div class="leader-avatar">T</div>
-      <div class="leader-name">T. Kelley</div>
-      <div class="leader-title">Co-Founder &amp; Managing Partner</div>
-    </div>
-    <div class="leader">
-      <div class="leader-avatar">M</div>
-      <div class="leader-name">M. Kelley</div>
-      <div class="leader-title">Co-Founder &amp; President</div>
-    </div>
-  </div>
-</section>
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-mark">Ark² Capital · Est. 2026</div>
+  <div class="divider-line"></div>
+</div>
 
 <!-- CONTACT -->
-<section class="contact" id="contact">
+<section id="contact">
   <div class="contact-inner">
-    <div>
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">Get in Touch</h2>
-      <p>Ark² Capital is a private family office. Inquiries may be directed to the address below.</p>
-    </div>
-    <div class="contact-items">
+    <div class="section-label reveal" style="text-align:center;">Get in Touch</div>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3rem);">We work with a <em>select</em><br>number of partners</h2>
+    <p class="reveal">Ark² Capital is not open to unsolicited approaches. If you have been introduced to us through a shared relationship, we would be glad to connect.</p>
+    <a href="mailto:trey@ark2cap.com" class="btn-outline reveal">Request an Introduction</a>
+    <div class="contact-line reveal">
       <div class="contact-item">
-        <div class="contact-item-label">Investor Relations</div>
-        <div class="contact-item-val">trey@ark2cap.com</div>
+        <div class="contact-item-label">Email</div>
+        <a href="mailto:trey@ark2cap.com">trey@ark2cap.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Location</div>
+        <span>Private · By Appointment</span>
       </div>
     </div>
   </div>
@@ -677,14 +614,26 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2026 Ark Squared Capital LLC. All rights reserved. · Not an offer to sell securities.</div>
-  <div class="footer-links">
-    <a href="#">Privacy</a>
-    <a href="#">Disclosures</a>
-    <a href="#">ADV Part 2</a>
-    <a href="#">SEC Filings</a>
-  </div>
+  <a href="#" class="logo">Ark<sup>2</sup> Capital</a>
+  <p>© 2026 Ark² Capital. All rights reserved. · Private &amp; Confidential</p>
 </footer>
 
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80 * i);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
 </body>
 </html>
