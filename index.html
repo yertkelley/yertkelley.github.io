@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ark² Capital</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23111008'/><text x='4' y='23' font-family='Georgia,serif' font-size='16' fill='%23B8A06A'>A</text><text x='17' y='17' font-family='Georgia,serif' font-size='9' fill='%23B8A06A'>2</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8A06A;
+    --gold-light: #D4BC8A;
+    --gold-dark: #8C7548;
+    --ink: #111008;
+    --parchment: #FAF8F3;
+    --warm-gray: #6B6560;
+    --line: rgba(184,160,106,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    background: var(--parchment);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 5vw;
+    background: transparent;
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(250,248,243,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo sup {
+    font-size: 0.65em;
+    vertical-align: super;
+    color: var(--gold);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+  }
+  nav ul a {
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    transition: color 0.3s;
+  }
+  nav ul a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 5vw 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(184,160,106,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184,160,106,0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 860px;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-light);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  .hero-sub {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
+    line-height: 2;
+    max-width: 480px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.4rem;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .hero-cta:hover { color: var(--gold); }
+  .hero-cta svg { transition: transform 0.3s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 5vw;
+    margin: 1rem 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--line); }
+  .divider-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 8rem 5vw; }
+
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  h2 em { font-style: italic; color: var(--gold-dark); }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy { background: var(--ink); color: var(--parchment); }
+  .philosophy .section-label { color: var(--gold-light); }
+  .philosophy h2 { color: var(--parchment); }
+  .philosophy h2 em { color: var(--gold-light); }
+
+  .philosophy-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .philosophy-text p {
+    font-size: 0.95rem;
+    line-height: 2;
+    color: rgba(250,248,243,0.7);
+    margin-top: 1.5rem;
+  }
+
+  .philosophy-pillars {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pillar {
+    padding: 2rem 0;
+    border-top: 1px solid rgba(184,160,106,0.2);
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .pillar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    padding-top: 0.2rem;
+  }
+
+  .pillar h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .pillar p {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: rgba(250,248,243,0.5);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── APPROACH ── */
+  .approach-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .approach-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 5rem;
+  }
+
+  .approach-header p {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: var(--warm-gray);
+  }
+
+  .approach-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .approach-card {
+    background: var(--parchment);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+  }
+  .approach-card:hover { background: #F0EDDF; }
+
+  .approach-card-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 1.5rem;
+  }
+
+  .approach-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .approach-card p {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--warm-gray);
+  }
+
+  /* ── STATS ── */
+  .stats { background: #F0EDE3; padding: 5rem 5vw; }
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    padding: 2rem;
+    border-right: 1px solid var(--line);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 3rem;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-num span { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-inner p {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: var(--warm-gray);
+    margin-bottom: 3rem;
+  }
+
+  .contact-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    text-align: center;
+  }
+  .contact-item .contact-item-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .contact-item a, .contact-item span {
+    font-size: 0.82rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.3s;
+  }
+  .contact-item a:hover { color: var(--gold); }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--gold);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-outline:hover { background: var(--gold); color: var(--parchment); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo { font-size: 1.1rem; }
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .philosophy-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .approach-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .approach-cards { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); }
+    .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Ark<sup>2</sup> Capital</a>
+  <ul>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Family Investment Office</div>
+    <h1>Stewardship<br>across <em>generations</em></h1>
+    <p class="hero-sub">Preserving and growing family wealth with patience, precision, and long-term conviction.</p>
+    <a href="#philosophy" class="hero-cta">
+      Our philosophy
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+        <path d="M1 5h14M10 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Generations of Trust</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Year in Operation</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Asset Classes</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-inner">
+    <div class="philosophy-text reveal">
+      <div class="section-label">Our Philosophy</div>
+      <h2>Built to <em>endure</em>,<br>not to impress</h2>
+      <p>At Ark² Capital, we operate with the quiet conviction that true wealth is measured in decades, not quarters. We are stewards first — allocating capital where it can compound with care, discipline, and a deep respect for what has been built before us.</p>
+      <p>We do not chase trends. We do not follow consensus. We anchor every decision in fundamentals, relationships, and a generational perspective that no institutional calendar can replicate.</p>
+    </div>
+    <div class="philosophy-pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num">01</div>
+        <div>
+          <h3>Permanence of Capital</h3>
+          <p>We invest with an indefinite horizon. Our capital is patient, allowing businesses to breathe and compound without the pressure of short-term expectations.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">02</div>
+        <div>
+          <h3>Trust as Infrastructure</h3>
+          <p>Every partnership we enter is built on integrity and transparency. Relationships are the true asset — returns are the result.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">03</div>
+        <div>
+          <h3>Disciplined Concentration</h3>
+          <p>We hold fewer, better positions. Conviction-led investing demands selectivity; we would rather own a little of something extraordinary than a lot of something ordinary.</p>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">04</div>
+        <div>
+          <h3>Legacy by Design</h3>
+          <p>Every allocation decision is made with the next generation in mind. Wealth that cannot transfer is wealth that was never truly built.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="approach-inner">
+    <div class="approach-header reveal">
+      <div>
+        <div class="section-label">Our Approach</div>
+        <h2>Where we<br><em>allocate</em></h2>
+      </div>
+      <div>
+        <p>We deploy across a curated set of asset classes, chosen for their ability to generate durable, risk-adjusted returns that compound meaningfully across long holding periods.</p>
+      </div>
+    </div>
+
+    <div class="approach-cards" style="grid-template-columns: 1fr 1fr;">
+      <div class="approach-card reveal" style="padding: 3rem 2.5rem;">
+        <svg class="approach-card-icon" viewBox="0 0 32 32" fill="none">
+          <rect x="3" y="10" width="12" height="16" stroke="#B8A06A" stroke-width="1.2"/>
+          <rect x="17" y="6" width="12" height="20" stroke="#B8A06A" stroke-width="1.2"/>
+          <path d="M6 10V7a2 2 0 012-2h4a2 2 0 012 2v3" stroke="#8C7548" stroke-width="1"/>
+          <path d="M8 14h2M8 17h2M8 20h2M20 10h2M20 13h2M20 16h2" stroke="#B8A06A" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <h3>Real Assets</h3>
+        <p>Direct investment in commercial and residential real estate, agriculture, and infrastructure — tangible assets that preserve purchasing power across cycles.</p>
+      </div>
+      <div class="approach-card reveal" style="padding: 3rem 2.5rem;">
+        <svg class="approach-card-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="11" stroke="#B8A06A" stroke-width="1.2"/>
+          <path d="M16 5v22M5 16h22" stroke="#B8A06A" stroke-width="1.2" stroke-linecap="round"/>
+          <ellipse cx="16" cy="16" rx="5" ry="11" stroke="#8C7548" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+        <h3>Public Markets</h3>
+        <p>A concentrated portfolio of publicly traded equities held for multi-year periods, selected with the same rigor and patience applied to our private investments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-mark">Ark² Capital · Est. 2026</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal" style="text-align:center;">Get in Touch</div>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3rem);">We work with a <em>select</em><br>number of partners</h2>
+    <p class="reveal">Ark² Capital is not open to unsolicited approaches. If you have been introduced to us through a shared relationship, we would be glad to connect.</p>
+    <a href="mailto:trey@ark2cap.com" class="btn-outline reveal">Request an Introduction</a>
+    <div class="contact-line reveal">
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <a href="mailto:trey@ark2cap.com">trey@ark2cap.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Location</div>
+        <span>Private · By Appointment</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">Ark<sup>2</sup> Capital</a>
+  <p>© 2026 Ark² Capital. All rights reserved. · Private &amp; Confidential</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80 * i);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
